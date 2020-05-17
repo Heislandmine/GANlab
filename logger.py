@@ -39,7 +39,3 @@ class Logger:
 
     def _check_dir_exsist(self, dir_name: str) -> bool:
         return os.path.exists(dir_name)
-
-
-if __name__ == "__main__":
-    Logger()
