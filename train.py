@@ -4,6 +4,7 @@ import models
 import matplotlib.pyplot as plt
 import trainer
 import os.path
+import logger
 
 # 設定
 # todo:別モジュールとして切り出し
@@ -22,6 +23,8 @@ noise_dim = 100
 # モデルの生成
 g = models.Generator()
 d = models.Discriminator()
+# ログ設定
+logger = logger.Logger()
 # 画像サイズの設定
 if image_c is None:
     image_size = (None, image_h, image_w)
@@ -37,7 +40,7 @@ if os.path.exists(d_w):
     d.build(image_size)
     d.load_weights(d_w)
 # 学習の設定
-t = trainer.Trainer(g, d)
+t = trainer.Trainer(g, d, logger)
 # データセットの構築
 # todo:別ファイルに切り出し
 # todo:コンフィグファイルからモデルを構築できるよう改造
