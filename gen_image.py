@@ -13,7 +13,7 @@ def gen_image(model, noise, filename="test"):
         plt.subplot(4, 4, i + 1)
         plt.imshow(image[i, :, :])
         plt.axis("off")
-    plt.savefig("results\\images\\" + filename)
+    plt.savefig(filename)
 
 
 if __name__ == "__main__":

@@ -17,7 +17,7 @@ image_c = None
 # ハイパーパラメータ
 # todo:別モジュールとして切り出し
 # todo:コンフィグファイルから読み込めるよう改造
-epochs = 100
+epochs = 5
 batch_size = 32
 noise_dim = 100
 # モデルの生成
@@ -61,7 +61,7 @@ plt.plot(mem, t.d_result, label="disc_loss")
 plt.xlabel("epochs")
 plt.ylabel("loss")
 plt.legend()
-plt.savefig("results\\images\\val.png")
+# plt.savefig("results\\images\\val.png")
 # plt.show()
 # 重みの保存
 # todo:別モジュールとして切り出し

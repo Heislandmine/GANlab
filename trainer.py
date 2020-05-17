@@ -7,6 +7,7 @@ class Trainer:
     def __init__(self, g, d, l):
         self.g = g
         self.d = d
+        self.l = l
         self.g_metrics = tf.keras.metrics.Mean()
         self.d_metrics = tf.keras.metrics.Mean()
         self.g_result = []
@@ -27,10 +28,12 @@ class Trainer:
             self.g_result.append(self.g_metrics.result())
             self.d_result.append(self.d_metrics.result())
             # 出力画像を保存
-            gen_image.gen_image(self.g, sample_noise, str(epoch))
+            gen_image.gen_image(
+                self.g, sample_noise, self.l.images_dir_name + "/" + str(epoch)
+            )
             if epoch % 100 == 0:
-                self.g.save_weights("results\\weights//g_w_" + str(epoch) + ".h5")
-                self.d.save_weights("results\\weights//d_w_" + str(epoch) + ".h5")
+                self.g.save_weights(self.l.weights_dir_name + "/g_w_" + str(epoch) + ".h5")
+                self.d.save_weights(self.l.weights_dir_name + "/d_w_" + str(epoch) + ".h5")
 
     @tf.function
     def _train_step_g(self, noise):
