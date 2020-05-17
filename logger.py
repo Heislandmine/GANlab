@@ -15,12 +15,14 @@ class Logger:
         self.log_dir_name = self.base_dir_name + "/log"
         self.images_dir_name = self.base_dir_name + "/images"
         self.weights_dir_name = self.base_dir_name + "/weights"
+        self.train_conf_dir_name = self.base_dir_name + "/train_conf"
 
         self.log_dirs = [
             self.base_dir_name,
             self.log_dir_name,
             self.images_dir_name,
             self.weights_dir_name,
+            self.train_conf_dir_name,
         ]
 
         self._make_log_dir(self.log_dirs)
