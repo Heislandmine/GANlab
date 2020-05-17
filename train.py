@@ -17,7 +17,7 @@ image_c = None
 # ハイパーパラメータ
 # todo:別モジュールとして切り出し
 # todo:コンフィグファイルから読み込めるよう改造
-epochs = 5
+epochs = 100
 batch_size = 32
 noise_dim = 100
 # モデルの生成
@@ -54,17 +54,3 @@ dataset = dataset.shuffle(buffer_size=train.shape[0])
 t.train(dataset, epochs, batch_size)
 # 学習結果の出力
 # todo:別モジュールとして切り出し
-mem = [i + 1 for i in range(epochs)]
-fig = plt.figure(figsize=(10, 6))
-plt.plot(mem, t.g_result, label="gen_loss")
-plt.plot(mem, t.d_result, label="disc_loss")
-plt.xlabel("epochs")
-plt.ylabel("loss")
-plt.legend()
-# plt.savefig("results\\images\\val.png")
-# plt.show()
-# 重みの保存
-# todo:別モジュールとして切り出し
-# todo:学習中に保存できるよう組み込み
-# g.save_weights("g_w.h5")
-# d.save_weights("d_w.h5")

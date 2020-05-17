@@ -10,30 +10,42 @@ class Trainer:
         self.l = l
         self.g_metrics = tf.keras.metrics.Mean()
         self.d_metrics = tf.keras.metrics.Mean()
-        self.g_result = []
-        self.d_result = []
+        self.g_summary_writer = tf.summary.create_file_writer(l.log_dir_name + "/g")
+        self.d_summary_writer = tf.summary.create_file_writer(l.log_dir_name + "/d")
 
     def train(self, dataset, epochs, batch_size):
         sample_noise = tf.random.normal([16, 100])  # todo:バッチサイズをパラメータとして設定できるようにする
         for epoch in range(epochs):
             start = time.time()
+
             self.g_metrics.reset_states()
             self.d_metrics.reset_states()
+
             for i, image_batch in enumerate(dataset):
                 noise = tf.random.normal([batch_size, 100])
+
                 self._train_step_g(noise)
-                if i % 2 == 0:
-                    self._train_step_d(image_batch, noise)
+
+                self._train_step_d(image_batch, noise)
+
+            with self.g_summary_writer.as_default():
+                tf.summary.scalar("loss", self.g_metrics.result(), step=epoch)
+
+            with self.d_summary_writer.as_default():
+                tf.summary.scalar("loss", self.d_metrics.result(), step=epoch)
+
             print("epoch{}: {}".format(epoch + 1, time.time() - start))
-            self.g_result.append(self.g_metrics.result())
-            self.d_result.append(self.d_metrics.result())
             # 出力画像を保存
             gen_image.gen_image(
                 self.g, sample_noise, self.l.images_dir_name + "/" + str(epoch)
             )
             if epoch % 100 == 0:
-                self.g.save_weights(self.l.weights_dir_name + "/g_w_" + str(epoch) + ".h5")
-                self.d.save_weights(self.l.weights_dir_name + "/d_w_" + str(epoch) + ".h5")
+                self.g.save_weights(
+                    self.l.weights_dir_name + "/g_w_" + str(epoch) + ".h5"
+                )
+                self.d.save_weights(
+                    self.l.weights_dir_name + "/d_w_" + str(epoch) + ".h5"
+                )
 
     @tf.function
     def _train_step_g(self, noise):
