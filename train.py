@@ -1,7 +1,6 @@
 # todo:パラメータ探索を自動化できるよう改造
 import tensorflow as tf
 import models
-import matplotlib.pyplot as plt
 import trainer
 import os.path
 import logger
