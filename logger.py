@@ -10,13 +10,19 @@ import time
 class Logger:
     def __init__(self):
         self.train_name = self._get_time_stamp()
+
         self.base_dir_name = "results/" + self.train_name
+        self.log_dir_name = self.base_dir_name + "/log"
+        self.images_dir_name = self.base_dir_name + "/images"
+        self.weights_dir_name = self.base_dir_name + "/weights"
+
         self.log_dirs = [
             self.base_dir_name,
-            self.base_dir_name + "/log",
-            self.base_dir_name + "/images",
-            self.base_dir_name + "/weights",
+            self.log_dir_name,
+            self.images_dir_name,
+            self.weights_dir_name,
         ]
+
         self._make_log_dir(self.log_dirs)
 
     def _get_time_stamp(self) -> str:
