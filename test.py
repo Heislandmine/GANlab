@@ -1,6 +1,7 @@
 import models
 import numpy as np
 import matplotlib.pyplot as plt
+
 g = models.Generator()
 z = np.ones((1, 100))
 
