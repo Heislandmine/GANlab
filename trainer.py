@@ -4,7 +4,7 @@ import gen_image
 
 
 class Trainer:
-    def __init__(self, g, d):
+    def __init__(self, g, d, l):
         self.g = g
         self.d = d
         self.g_metrics = tf.keras.metrics.Mean()
